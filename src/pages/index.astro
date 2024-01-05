@@ -1,10 +1,30 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
+import Badge from "../components/Badge.astro";
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
-	<h1>Porfolio</h1>
+    <section class="w-full lg:w-[740px] mx-auto py-44">
+      <h1 class="text-white text-5xl font-bold flex flex-row gap-x-4 pb-10">
+        Hey I'm Javi Barrientos
+        <a
+          href="https://www.linkedin.com/in/javi-barrientos-peralta/"
+          target="_blank"
+          rel="noopener"
+          class="flex justify-center items-center"
+        >
+          <Badge>Disponible para trabajar</Badge>
+        </a>
+      </h1>
+      <h2 class="text-xl opacity-80">
+        +2 años de experiencia. Desarrollador frontend con muchas ganas de
+        aprender. De Barcelona, España.
+      </h2>
+
+      <!-- TODO - Continuar video cap "Acomodando imagen (owner)" https://youtu.be/HEMvsJTBweY?t=1556 -->
+
+      <ul></ul>
+    </section>
   </main>
 </Layout>
