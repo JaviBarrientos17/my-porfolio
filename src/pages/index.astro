@@ -1,11 +1,20 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Badge from "../components/Badge.astro";
+import LinkedInIcon from "../components/icons/LinkedIn.astro";
+import GitHubIcon from "../components/icons/GitHub.astro";
+import MailIcon from "../components/icons/Mail.astro";
+import SocialPill from "../components/SocialPill.astro";
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
     <section class="w-full lg:w-[740px] mx-auto py-44">
+      <img
+        class="rounded-full w-12 h-12 mb-4"
+        src="https://avatars.githubusercontent.com/u/44582104?v=4"
+        alt="Profile photo"
+      />
       <h1 class="text-white text-5xl font-bold flex flex-row gap-x-4 pb-10">
         Hey I'm Javi Barrientos
         <a
@@ -17,14 +26,28 @@ import Badge from "../components/Badge.astro";
           <Badge>Disponible para trabajar</Badge>
         </a>
       </h1>
-      <h2 class="text-xl opacity-80">
-        +2 años de experiencia. Desarrollador frontend con muchas ganas de
-        aprender. De Barcelona, España.
+      <h2 class="text-xl opacity-80 text-wrap">
+        <span>+2 años de experiencia.</span>
+        <span class="text-yellow-200/90"
+          >Desarrollador frontend con muchas ganas de aprender.</span
+        >
+        <span class="text-red-200/90"> De Barcelona, España.</span>
       </h2>
 
-      <!-- TODO - Continuar video cap "Acomodando imagen (owner)" https://youtu.be/HEMvsJTBweY?t=1556 -->
-
-      <ul></ul>
+      <nav class="flex gap-4 mt-8 flex-wrap">
+        <SocialPill href="https://linkedin.com/in/midudev">
+          <LinkedInIcon class="size-4 md:size-6" />
+          LinkedIn
+        </SocialPill>
+        <SocialPill href="https://github.com/midudev">
+          <GitHubIcon class="size-4 md:size-6" />
+          GitHub
+        </SocialPill>
+        <SocialPill href="mailto:miduga@gmail.com">
+          <MailIcon class="size-4 md:size-6" />
+          javierbarrientos2010@gmail.com
+        </SocialPill>
+      </nav>
     </section>
   </main>
 </Layout>
