@@ -5,6 +5,8 @@ import LinkedInIcon from "../components/icons/LinkedIn.astro";
 import GitHubIcon from "../components/icons/GitHub.astro";
 import MailIcon from "../components/icons/Mail.astro";
 import SocialPill from "../components/SocialPill.astro";
+import Experience from "../components/Experience.astro";
+import SectionContainer from "../components/SectionContainer.astro";
 ---
 
 <Layout
@@ -12,7 +14,7 @@ import SocialPill from "../components/SocialPill.astro";
   description="Contrata a Javi Barrientos Peralta para crear tu aplicación web o móvil. Desarrollador y Programador Web. Especializado en crear proyectos únicos."
 >
   <main>
-    <section class="w-full lg:w-[740px] mx-auto py-44">
+    <SectionContainer>
       <img
         class="rounded-full size-12 mb-4"
         src="https://avatars.githubusercontent.com/u/44582104?v=4"
@@ -26,7 +28,9 @@ import SocialPill from "../components/SocialPill.astro";
           rel="noopener"
           class="flex justify-center items-center"
         >
-          <Badge>Disponible para trabajar</Badge>
+          <Badge>
+            Analista de Arquitectura Empresarial en Accenture España
+          </Badge>
         </a>
       </h1>
       <h2 class="text-xl opacity-80 text-wrap">
@@ -51,6 +55,10 @@ import SocialPill from "../components/SocialPill.astro";
           javierbarrientos2010@gmail.com
         </SocialPill>
       </nav>
-    </section>
+    </SectionContainer>
+
+    <SectionContainer>
+      <Experience />
+    </SectionContainer>
   </main>
 </Layout>
