@@ -1,9 +1,30 @@
-<header class="flex justify-center items-center py-3 w-[1120px] mx-auto">
-  <nav class="flex flex-row gap-x-10 opacity-90">
-    <a href="#top">Inicio</a>
-    <a href="#experience">Experiencia</a>
-    <a href="#projects">Proyectos</a>
-    <a href="#about">Sobre mí</a>
-    <a href="#contact">Contacto</a>
+<header
+  class={`
+    flex justify-center items-center
+    mx-auto
+    py-5
+    sticky top-0
+    w-full xl:w-[1120px]
+    z-10
+  `}
+>
+  <nav
+    class={`
+      px-3 py-1
+      flex flex-row items-center
+    `}
+  >
+    <a class="hover:bg-white/10 rounded-full px-3 transition" href="#experience"
+      >Experiencia</a
+    >
+    <a class="hover:bg-white/10 rounded-full px-3 transition" href="#projects"
+      >Proyectos</a
+    >
+    <a class="hover:bg-white/10 rounded-full px-3 transition" href="#aboutme"
+      >Sobre mí</a
+    >
+    <a class="hover:bg-white/10 rounded-full px-3 transition" href="#contact"
+      >Contacto</a
+    >
   </nav>
 </header>
