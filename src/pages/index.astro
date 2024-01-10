@@ -7,6 +7,7 @@ import MailIcon from "../components/icons/Mail.astro";
 import SocialPill from "../components/SocialPill.astro";
 import Experience from "../components/Experience.astro";
 import SectionContainer from "../components/SectionContainer.astro";
+import Briefcase from "../components/icons/Briefcase.astro";
 ---
 
 <Layout
@@ -14,7 +15,7 @@ import SectionContainer from "../components/SectionContainer.astro";
   description="Contrata a Javi Barrientos Peralta para crear tu aplicación web o móvil. Desarrollador y Programador Web. Especializado en crear proyectos únicos."
 >
   <main>
-    <SectionContainer>
+    <SectionContainer class="py-44 pb-24">
       <img
         class="rounded-full size-12 mb-4"
         src="https://avatars.githubusercontent.com/u/44582104?v=4"
@@ -57,7 +58,11 @@ import SectionContainer from "../components/SectionContainer.astro";
       </nav>
     </SectionContainer>
 
-    <SectionContainer>
+    <SectionContainer id="experience">
+      <h2 class="text-2xl font-semibold mb-6 flex gap-x-3 items-center">
+        <Briefcase class="size-4 md:size-6" />
+        Experiencia laboral
+      </h2>
       <Experience />
     </SectionContainer>
   </main>
