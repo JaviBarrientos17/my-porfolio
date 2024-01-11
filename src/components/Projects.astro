@@ -43,11 +43,13 @@ const PROJECTS = [
           </li>
         ))}
       </ul>
-      <img
-        class="rounded shadow-2xl shadow-white/10 size-3/4 mx-auto"
-        src={image}
-        alt={`Captura de pantalla del proyecto ${title}`}
-      />
+      <a href={link}>
+        <img
+          class="rounded shadow-2xl shadow-white/10 size-3/4 transition hover:scale-105 hover:bg-white/10 mx-auto"
+          src={image}
+          alt={`Captura de pantalla del proyecto ${title}`}
+        />
+      </a>
     </article>
   ))
 }
