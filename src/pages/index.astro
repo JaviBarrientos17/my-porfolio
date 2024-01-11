@@ -7,7 +7,9 @@ import MailIcon from "../components/icons/Mail.astro";
 import SocialPill from "../components/SocialPill.astro";
 import Experience from "../components/Experience.astro";
 import SectionContainer from "../components/SectionContainer.astro";
-import Briefcase from "../components/icons/Briefcase.astro";
+import BriefcaseIcon from "../components/icons/Briefcase.astro";
+import CodeIcon from "../components/icons/Code.astro";
+import Projects from "../components/Projects.astro";
 ---
 
 <Layout
@@ -36,7 +38,7 @@ import Briefcase from "../components/icons/Briefcase.astro";
           </Badge>
         </a>
       </h1>
-      <h2 class="text-xl opacity-80 text-wrap">
+      <h2 class="text-xl lg:text-2xl opacity-80 text-wrap max-w-[700px]">
         <span>+2 años de experiencia.</span>
         <span class="text-yellow-200/90"
           >Desarrollador frontend con muchas ganas de aprender.</span
@@ -61,11 +63,19 @@ import Briefcase from "../components/icons/Briefcase.astro";
     </SectionContainer>
 
     <SectionContainer id="experience">
-      <h2 class="text-2xl font-semibold mb-6 flex gap-x-3 items-center">
-        <Briefcase class="size-4 md:size-6" />
+      <h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center">
+        <BriefcaseIcon class="size-4 md:size-6" />
         Experiencia laboral
       </h2>
       <Experience />
+    </SectionContainer>
+
+    <SectionContainer id="projects">
+      <h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center">
+        <CodeIcon class="size-4 md:size-6" />
+        Proyectos
+      </h2>
+      <Projects />
     </SectionContainer>
   </main>
 </Layout>
