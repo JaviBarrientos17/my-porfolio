@@ -16,8 +16,7 @@ const TAGS = {
 };
 const PROJECTS = [
   {
-    title:
-      "Porfolio de Javi Barrientos Peralta | Desarrollador y Programador Web",
+    title: "Porfolio personal",
     description: "Creado desde cero con Astro y Tailwind CSS.",
     link: "",
     github: "https://github.com/JaviBarrientos17/my-porfolio",
@@ -35,7 +34,9 @@ const PROJECTS = [
       <ul class="flex gap-x-2 flex-row mb-2">
         {tags.map((tag) => (
           <li>
-            <span class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}>
+            <span
+              class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}
+            >
               <tag.icon class="size-4" />
               {tag.name}
             </span>
