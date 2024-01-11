@@ -1,6 +1,8 @@
 ---
 import AstroIcon from "./icons/AstroIcon.astro";
 import TailwindIcon from "../components/icons/Tailwind.astro";
+import GitHubIcon from "../components/icons/GitHub.astro";
+import GitHubPill from "./GitHubPill.astro";
 
 const TAGS = {
   Astro: {
@@ -31,6 +33,7 @@ const PROJECTS = [
     <article>
       <h3 class="text-2xl font-semibold text-yellow-200 mb-2">{title}</h3>
       <p class="text-lg mb-4 text-pretty">{description}</p>
+
       <ul class="flex gap-x-2 flex-row mb-4">
         {tags.map((tag) => (
           <li>
@@ -45,11 +48,14 @@ const PROJECTS = [
       </ul>
       <a href={link}>
         <img
-          class="rounded shadow-2xl shadow-white/10 size-3/4 transition hover:scale-105 hover:bg-white/10 mx-auto"
+          class="rounded shadow-2xl shadow-white/10 size-3/4 transition hover:scale-105 hover:bg-white/10 mx-auto mb-10"
           src={image}
           alt={`Captura de pantalla del proyecto ${title}`}
         />
       </a>
+      <GitHubPill href={github}>
+        <GitHubIcon class="size-4 md:size-6" /> Ver en GitHub
+      </GitHubPill>
     </article>
   ))
 }
