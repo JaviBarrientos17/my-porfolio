@@ -1,6 +1,7 @@
 ---
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
+import { inject } from "@vercel/analytics";
 import "@fontsource-variable/onest";
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+
+inject();
 ---
 
 <!doctype html>
