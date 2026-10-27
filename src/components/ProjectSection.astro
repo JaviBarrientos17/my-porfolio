@@ -1,0 +1,33 @@
+---
+import Projects from "../components/Projects.astro";
+---
+<section id="proyectos" class="py-10 md:py-16">
+  <details class="group" open>
+    <summary
+      class="flex justify-between items-center cursor-pointer select-none mb-6 md:mb-10 hover:opacity-80 transition-opacity"
+    >
+      <h2
+        class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2 sm:gap-3"
+      >
+        <span class="text-blue-400">02.</span> Proyectos Destacados
+      </h2>
+      <span
+        class="text-zinc-500 transition-transform duration-300 group-open:rotate-180"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"></path></svg
+        >
+      </span>
+    </summary>
+
+    <Projects />
+  </details>
+</section>

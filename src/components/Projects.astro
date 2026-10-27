@@ -1,61 +1,99 @@
 ---
+import { PROJECTS_DATA } from "../data/projects";
+
 import AstroIcon from "./icons/AstroIcon.astro";
-import TailwindIcon from "@/components/icons/Tailwind.astro";
-import GitHubIcon from "@/components/icons/GitHub.astro";
+import TailwindIcon from "./icons/Tailwind.astro";
+import ReactIcon from "./icons/React.astro";
+import CSSIcon from "./icons/CSS.astro";
+import GitHub from "./icons/GitHub.astro";
 import GitHubPill from "./GitHubPill.astro";
 
-const TAGS = {
-  Astro: {
-    name: "Astro",
-    class: "bg-black text-white",
-    icon: AstroIcon,
-  },
-  Tailwind: {
-    name: "Tailwind CSS",
-    class: "bg-[#003159] text-white",
-    icon: TailwindIcon,
-  },
+// Mapeo simple para relacionar el string del JSON con el componente de Astro
+const ICON_MAP: Record<string, any> = {
+  AstroIcon,
+  TailwindIcon,
+  ReactIcon,
+  CSSIcon,
 };
-const PROJECTS = [
-  {
-    title: "Porfolio personal",
-    description: "Creado desde cero con Astro y Tailwind CSS.",
-    link: "https://javi-barrientos-peralta.netlify.app/",
-    github: "https://github.com/JaviBarrientos17/my-porfolio",
-    image: "/projects/porfolio.webp",
-    tags: [TAGS.Astro, TAGS.Tailwind],
-  },
-];
 ---
 
-{
-  PROJECTS.map(({ title, description, link, github, image, tags }) => (
-    <article>
-      <h3 class="text-2xl font-semibold text-yellow-200 mb-2">{title}</h3>
-      <p class="text-lg mb-4 text-pretty">{description}</p>
+<div class="mb-8 flex gap-3 flex-wrap" id="project-filters">
+  <button class="filter-btn active px-4 py-1.5 rounded-full bg-blue-500/20 text-blue-300 text-sm font-medium transition-all" data-filter="all">Todos</button>
+  <button class="filter-btn px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 text-sm font-medium transition-all" data-filter="React">React</button>
+  <button class="filter-btn px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 text-sm font-medium transition-all" data-filter="Astro">Astro</button>
+</div>
 
-      <ul class="flex gap-x-2 flex-row mb-4">
-        {tags.map((tag) => (
-          <li>
-            <span
-              class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}
-            >
-              <tag.icon class="size-4" />
-              {tag.name}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <a href={link}>
-        <img
-          class="rounded shadow-2xl shadow-white/10 size-3/4 transition hover:scale-105 hover:bg-white/10 mx-auto mb-10"
-          src={image}
-          alt={`Captura de pantalla del proyecto ${title}`}
-        />
-      </a>
-      <GitHubPill href={github}>
-        <GitHubIcon class="size-4 md:size-6" /> Ver en GitHub
-      </GitHubPill>
+<div class="grid grid-cols-1 gap-8" id="projects-grid">
+  {PROJECTS_DATA.map(({ title, description, link, github, image, tags }) => (
+    <article 
+      class="group/project project-card flex flex-col md:flex-row gap-6 p-4 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all duration-300"
+      data-tags={tags.map(t => t.name).join(',')}
+    >
+      <div class="w-full md:w-5/12 aspect-video md:aspect-auto rounded-2xl overflow-hidden bg-zinc-900 border border-white/5">
+        <a href={link} target="_blank">
+          <img 
+            src={image} 
+            alt={`Captura de pantalla del proyecto ${title}`}
+            class="w-full h-full object-cover transform group-hover/project:scale-105 transition-transform duration-500 opacity-90 group-hover/project:opacity-100" 
+          />
+        </a>
+      </div>
+      
+      <div class="w-full md:w-7/12 flex flex-col justify-center p-2 md:pr-4">
+        <h3 class="text-2xl font-bold text-white mb-3">{title}</h3>
+        <p class="text-zinc-400 text-sm leading-relaxed mb-6">{description}</p>
+        
+        <ul class="flex flex-wrap gap-2 mb-6">
+          {tags.map((tag) => {
+            const IconComponent = ICON_MAP[tag.iconName];
+            return (
+              <li>
+                <span class={`flex items-center gap-x-2 rounded-md text-[11px] font-semibold tracking-wide uppercase py-1 px-2.5 ${tag.class} border border-current/20`}>
+                  {IconComponent && <IconComponent class="size-3.5" />}
+                  {tag.name}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div class="mt-auto">
+          <GitHubPill href={github}>
+            <GitHub class="size-4 md:size-5" /> GitHub
+          </GitHubPill>
+        </div>
+      </div>
     </article>
-  ))
-}
+  ))}
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.project-card');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => {
+        b.classList.remove('bg-blue-500/20', 'text-blue-300');
+        b.classList.add('bg-white/5', 'text-zinc-300');
+      });
+      btn.classList.remove('bg-white/5', 'text-zinc-300');
+      btn.classList.add('bg-blue-500/20', 'text-blue-300');
+
+      const filter = btn.getAttribute('data-filter');
+
+      cards.forEach(card => {
+        const tags = card.getAttribute('data-tags');
+        // Aseguramos que data-tags exista antes de intentar usar includes()
+        if (!tags) return;
+        
+        if (filter === 'all' || tags.includes(filter)) {
+          // type casting to HTMLElement for TypeScript safety if needed in Astro scripts
+          (card as HTMLElement).style.display = 'flex';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

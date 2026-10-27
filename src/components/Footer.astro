@@ -1,27 +1,13 @@
-<footer
-  class="rounded-lg shadow m-4 bg-black/20 backdrop-blur-lg w-full xl:w-[1120px] mx-auto"
->
-  <div
-    class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
-  >
-    <span class="text-sm text-yellow-200/90 sm:text-center">
-      © {new Date().getFullYear()}
-      <a
-        href="https://www.linkedin.com/in/javi-barrientos-peralta/"
-        class="hover:underline"
-      >
-        Javi Barrientos Peralta
-      </a>. Todos los derechos reservados.
-    </span>
-    <ul
-      class="flex flex-wrap items-center mt-3 text-sm font-medium text-white/90 sm:mt-0"
-    >
-      <li>
-        <a href="#aboutme" class="hover:underline me-4 md:me-6">Sobre mí</a>
-      </li>
-      <li>
-        <a href="#contacto" class="hover:underline">Contacto</a>
-      </li>
-    </ul>
-  </div>
+<footer class="py-8 md:py-10 border-t border-white/5 text-center text-zinc-500 text-xs md:text-sm mt-8 md:mt-10">
+  <p>
+    © <span id="current-year"></span> Javi Barrientos. Todos los derechos reservados.
+  </p>
 </footer>
+
+<script>
+  const yearElement = document.getElementById("current-year");
+  
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear().toString();
+  }
+</script>

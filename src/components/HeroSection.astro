@@ -1,0 +1,40 @@
+---
+import GitHubPill from "./GitHubPill.astro";
+import GitHub from "./icons/GitHub.astro";
+---
+
+<section class="py-12 md:py-24 flex flex-col items-center text-center">
+  <img
+    src="https://avatars.githubusercontent.com/u/44582104?v=4"
+    alt="Javi Barrientos"
+    class="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/10 mb-5 md:mb-6 object-cover shadow-2xl"
+  />
+
+  <h1
+    class="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-white mb-4 md:mb-6"
+  >
+    Hola, soy Javi Barrientos
+  </h1>
+
+  <p
+    class="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl mb-8 md:mb-10 leading-relaxed font-light text-balance px-4"
+  >
+    <strong class="text-white">+3 años de experiencia.</strong> Desarrollador frontend
+    enfocado en crear interfaces limpias, fluidas y adaptadas a cualquier dispositivo.
+    De Barcelona.
+  </p>
+
+  <div
+    class="flex flex-col w-full sm:w-auto sm:flex-row justify-center gap-3 md:gap-4 px-4"
+  >
+    <a
+      href="mailto:javierbarrientos2010@gmail.com"
+      class="w-full sm:w-auto px-6 py-3 rounded-xl bg-white text-zinc-950 font-semibold hover:scale-105 transition-transform duration-200 text-center"
+    >
+      Contáctame
+    </a>
+    <GitHubPill href="https://github.com/JaviBarrientos17">
+      <GitHub class="size-4 md:size-5" /> Explora mis proyectos
+    </GitHubPill>
+  </div>
+</section>
