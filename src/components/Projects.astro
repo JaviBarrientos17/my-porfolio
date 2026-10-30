@@ -5,51 +5,105 @@ import AstroIcon from "./icons/AstroIcon.astro";
 import TailwindIcon from "./icons/Tailwind.astro";
 import ReactIcon from "./icons/React.astro";
 import CSSIcon from "./icons/CSS.astro";
+import ElectronIcon from "./icons/Electron.astro";
 import GitHub from "./icons/GitHub.astro";
 import GitHubPill from "./GitHubPill.astro";
 
-// Mapeo simple para relacionar el string del JSON con el componente de Astro
+// Relaciona el nombre del icono guardado en projects.ts con su componente Astro.
 const ICON_MAP: Record<string, any> = {
   AstroIcon,
   TailwindIcon,
   ReactIcon,
   CSSIcon,
+  ElectronIcon,
 };
+
+// Genera los filtros a partir de las etiquetas que realmente usan los proyectos.
+// La clave normalizada evita duplicados por diferencias entre mayúsculas/minúsculas.
+const projectFilters = new Map<string, string>();
+
+for (const project of PROJECTS_DATA) {
+  for (const tag of project.tags ?? []) {
+    const label = tag.name?.trim();
+
+    if (!label) continue;
+
+    const key = label.toLocaleLowerCase();
+
+    if (!projectFilters.has(key)) {
+      projectFilters.set(key, label);
+    }
+  }
+}
+
+const filters = Array.from(projectFilters, ([value, label]) => ({
+  value,
+  label,
+}));
 ---
 
-<div class="mb-8 flex gap-3 flex-wrap" id="project-filters">
-  <button class="filter-btn active px-4 py-1.5 rounded-full bg-blue-500/20 text-blue-300 text-sm font-medium transition-all" data-filter="all">Todos</button>
-  <button class="filter-btn px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 text-sm font-medium transition-all" data-filter="React">React</button>
-  <button class="filter-btn px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 text-sm font-medium transition-all" data-filter="Astro">Astro</button>
+<div class="mb-8 flex flex-wrap gap-3" data-project-filters>
+  <button
+    type="button"
+    class="project-filter-btn rounded-full bg-blue-500/20 px-4 py-1.5 text-sm font-medium text-blue-300 transition-all"
+    data-project-filter="all"
+    aria-pressed="true"
+  >
+    Todos
+  </button>
+
+  {filters.map(({ value, label }) => (
+    <button
+      type="button"
+      class="project-filter-btn rounded-full bg-white/5 px-4 py-1.5 text-sm font-medium text-zinc-300 transition-all hover:bg-white/10"
+      data-project-filter={value}
+      aria-pressed="false"
+    >
+      {label}
+    </button>
+  ))}
 </div>
 
-<div class="grid grid-cols-1 gap-8" id="projects-grid">
+<div class="grid grid-cols-1 gap-8" data-projects-grid>
   {PROJECTS_DATA.map(({ title, description, link, github, image, tags }) => (
-    <article 
-      class="group/project project-card flex flex-col md:flex-row gap-6 p-4 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all duration-300"
-      data-tags={tags.map(t => t.name).join(',')}
+    <article
+      class="project-card group/project flex flex-col gap-6 rounded-3xl border border-white/5 bg-white/[0.02] p-4 transition-all duration-300 hover:border-white/20 md:flex-row"
+      data-project-card
+      data-tags={JSON.stringify(
+        (tags ?? [])
+          .map((tag) => tag.name?.trim().toLocaleLowerCase())
+          .filter(Boolean),
+      )}
     >
-      <div class="w-full md:w-5/12 aspect-video md:aspect-auto rounded-2xl overflow-hidden bg-zinc-900 border border-white/5">
-        <a href={link} target="_blank">
-          <img 
-            src={image} 
+      <div class="aspect-video w-full overflow-hidden rounded-2xl border border-white/5 bg-zinc-900 md:aspect-auto md:w-5/12">
+        <a href={link} target="_blank" rel="noopener noreferrer">
+          <img
+            src={image}
             alt={`Captura de pantalla del proyecto ${title}`}
-            class="w-full h-full object-cover transform group-hover/project:scale-105 transition-transform duration-500 opacity-90 group-hover/project:opacity-100" 
+            loading="lazy"
+            class="h-full w-full transform object-cover opacity-90 transition-transform duration-500 group-hover/project:scale-105 group-hover/project:opacity-100"
           />
         </a>
       </div>
-      
-      <div class="w-full md:w-7/12 flex flex-col justify-center p-2 md:pr-4">
-        <h3 class="text-2xl font-bold text-white mb-3">{title}</h3>
-        <p class="text-zinc-400 text-sm leading-relaxed mb-6">{description}</p>
-        
-        <ul class="flex flex-wrap gap-2 mb-6">
+
+      <div class="flex w-full flex-col justify-center p-2 md:w-7/12 md:pr-4">
+        <h3 class="mb-3 text-2xl font-bold text-white">{title}</h3>
+        <p class="mb-6 text-sm leading-relaxed text-zinc-400">{description}</p>
+
+        <ul class="mb-6 flex flex-wrap gap-2">
           {tags.map((tag) => {
             const IconComponent = ICON_MAP[tag.iconName];
+
             return (
               <li>
-                <span class={`flex items-center gap-x-2 rounded-md text-[11px] font-semibold tracking-wide uppercase py-1 px-2.5 ${tag.class} border border-current/20`}>
-                  {IconComponent && <IconComponent class="size-3.5" />}
+                <span
+                  class={`flex items-center gap-x-2 rounded-md border border-current/20 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ${tag.class}`}
+                >
+                  {IconComponent && (
+                    <IconComponent
+                      class={tag.iconName === "TailwindIcon" ? "h-3 w-5 shrink-0" : "size-3.5"}
+                    />
+                  )}
                   {tag.name}
                 </span>
               </li>
@@ -68,31 +122,50 @@ const ICON_MAP: Record<string, any> = {
 </div>
 
 <script>
-  const buttons = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.project-card');
+  const projectSections = document.querySelectorAll<HTMLElement>("[data-project-filters]");
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => {
-        b.classList.remove('bg-blue-500/20', 'text-blue-300');
-        b.classList.add('bg-white/5', 'text-zinc-300');
-      });
-      btn.classList.remove('bg-white/5', 'text-zinc-300');
-      btn.classList.add('bg-blue-500/20', 'text-blue-300');
+  projectSections.forEach((filtersContainer) => {
+    const root = filtersContainer.parentElement;
+    if (!root) return;
 
-      const filter = btn.getAttribute('data-filter');
+    const buttons = filtersContainer.querySelectorAll<HTMLButtonElement>(
+      "[data-project-filter]",
+    );
+    const cards = root.querySelectorAll<HTMLElement>("[data-project-card]");
 
-      cards.forEach(card => {
-        const tags = card.getAttribute('data-tags');
-        // Aseguramos que data-tags exista antes de intentar usar includes()
-        if (!tags) return;
-        
-        if (filter === 'all' || tags.includes(filter)) {
-          // type casting to HTMLElement for TypeScript safety if needed in Astro scripts
-          (card as HTMLElement).style.display = 'flex';
-        } else {
-          (card as HTMLElement).style.display = 'none';
-        }
+    const activeClasses = ["bg-blue-500/20", "text-blue-300"];
+    const inactiveClasses = ["bg-white/5", "text-zinc-300", "hover:bg-white/10"];
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedFilter = button.dataset.projectFilter ?? "all";
+
+        // Actualiza el estado visual y accesible de los botones.
+        buttons.forEach((item) => {
+          const isActive = item === button;
+
+          item.setAttribute("aria-pressed", String(isActive));
+          item.classList.remove(...activeClasses, ...inactiveClasses);
+          item.classList.add(
+            ...(isActive ? activeClasses : inactiveClasses),
+          );
+        });
+
+        // Compara etiquetas completas, no coincidencias parciales de texto.
+        cards.forEach((card) => {
+          let cardTags: string[] = [];
+
+          try {
+            cardTags = JSON.parse(card.dataset.tags ?? "[]") as string[];
+          } catch {
+            cardTags = [];
+          }
+
+          const isVisible =
+            selectedFilter === "all" || cardTags.includes(selectedFilter);
+
+          card.style.display = isVisible ? "" : "none";
+        });
       });
     });
   });
